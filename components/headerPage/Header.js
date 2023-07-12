@@ -27,8 +27,8 @@ const saveUserInfo=async()=>{
 if(session?.user){
   await setDoc(doc(db, "users", session.user.email), {
     userName: session.user.name,
-    email: session.user.email,
-    Image: session.user.image,
+    userEmail: session.user.email,
+    userImage: session.user.image,
   });
   
 
@@ -42,7 +42,9 @@ if(session?.user){
         <div className='flex   items-center p-6 gap-3'>
       <Image src="/pinterest-logo.png"  alt='logo' width={60}  height={60} className=' p-2 hover:bg-gray-300 rounded-full cursor-pointer'  />
       <button className='bg-black text-white rounded-full px-4   p-2'>Home</button>
-      <button className='rounded-full  px-4   p-2 font-semibold border-gray-200 border-2'>Create</button>
+      <button className='rounded-full  px-4   p-2 font-semibold border-gray-200 border-2' 
+      onClick={()=>router.push("/pin-builder")}
+      >Create</button>
 
       {/* add search input */}
 

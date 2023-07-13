@@ -1,23 +1,34 @@
 "use client"
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { useSession } from 'next-auth/react'
 import React, { useState } from 'react'
 import app from "@/utils/firebaseConfig";
+import { doc, getFirestore, setDoc } from "firebase/firestore";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+
 
 const PinBuilder = () => {
+
+
+const router=useRouter();
+
   const {data:session}=useSession();
   const [title,setTitle]=useState();
   const [desc,setDesc]=useState();
   const [link,setLink]=useState();
   const [file,setFile]=useState();
   const [selectedFile,setSelectedFile]=useState();
+  const [loading,setLoading]=useState(false);
 
 
 // upload from firebase
   const storage = getStorage(app);
+  const db=getFirestore(app);
+  const postId=Date.now().toString();
 
   const onSave =()=>{
-    console.log("Title",title,"Desc",desc,"Link",link,"File",file);
+    setLoading(true);
     uploadFile();
   }
 
@@ -25,7 +36,29 @@ const PinBuilder = () => {
     const storageRef =ref(storage,"pinterest/"+file.name);
     uploadBytes(storageRef, file).then((snapshot) => {
       console.log(' File Uploaded');
-    });
+
+    }).then(resp=>{getDownloadURL(storageRef).then( async (url)=>{
+      console.log("DownloadUrl",url);
+
+const postData={
+  title : title ,
+  desc : desc,
+  link : link, 
+  image : url,
+  userName: session.user.name,
+  userEmail: session.user.email,
+  userImage: session.user.image,
+  id:postId,
+
+}
+await setDoc (doc(db, "pinterest-post",postId),postData).then(resp=>{
+  console.log(`Post added `);
+  setLoading(true);
+  router.push("/"+session.user.email)
+})
+    })
+
+    })
   }
 
   return (
@@ -73,12 +106,22 @@ className="hero min-h-screen bg-base-200">
 
       <button 
        onClick={()=>onSave()}
-      className="btn btn-primary w-[12rem]">Get Started</button>
+      className="btn btn-primary w-[12rem]"> 
+      {loading?
+      <span className="loading loading-bars loading-lg"></span>:
+      <span>  Save</span>
+    
+      }
+     
+
+
+      </button>
 
       </div>
 
     </div>
   </div>
+
   </div>
 
       

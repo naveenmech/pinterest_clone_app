@@ -36,14 +36,26 @@ if(session?.user){
 }
 
 }
+const onCreateClick=()=>{
+  if(session)
+  {
+    router.push("/pin-builder")
+  }
+  else
+  {
+     signIn()
+  }
+}
 
   return (
     <>
         <div className='flex   items-center p-6 gap-3'>
-      <Image src="/pinterest-logo.png"  alt='logo' width={60}  height={60} className=' p-2 hover:bg-gray-300 rounded-full cursor-pointer'  />
+      <Image src="/pinterest-logo.png"  alt='logo' width={60}  height={60}
+      onClick={()=>router.push("/")}
+      className=' p-2 hover:bg-gray-300 rounded-full cursor-pointer'  />
       <button className='bg-black text-white rounded-full px-4   p-2'>Home</button>
       <button className='rounded-full  px-4   p-2 font-semibold border-gray-200 border-2' 
-      onClick={()=>router.push("/pin-builder")}
+      onClick={()=>onCreateClick()}
       >Create</button>
 
       {/* add search input */}
@@ -62,13 +74,14 @@ if(session?.user){
 <HiChatAlt2 className='text-[40px] text-gray-900'/>
 
 
-{ session?. user? <Image src={session?.user?.image}
+{ session?. user? (<Image 
 onClick={()=>router.push("/" + session.user.email)}
-alt='/profile' width={60}  height={60} className=' hover:bg-gray-300 rounded-full p-2 cursor-pointer' />:
+src={session?.user?.image}
+alt='profile' width={60}  height={60} className=' hover:bg-gray-300 rounded-full p-2 cursor-pointer' />):(
 
 
 
-<button onClick={() => signIn()} className='rounded-full  px-4   p-2 font-semibold border-gray-200 border-2'>Login</button> }
+<button onClick={() => signIn()} className='rounded-full  px-4   p-2 font-semibold border-gray-200 border-2'>Login</button>) }
 
 
 

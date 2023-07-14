@@ -11,6 +11,6 @@ providers: [
 
   }),
 ],
-secret:process.env.NEXTAUTH_kEY,
+secret:process.env.NEXTAUTH_KEY,
 });
  export {handler as GET ,handler as POST};

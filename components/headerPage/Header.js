@@ -26,10 +26,10 @@ useEffect(()=>{
 
 const saveUserInfo=async()=>{
 if(session?.user){
-  await setDoc(doc(db, "users", session.user.email), {
-    userName: session.user.name,
-    userEmail: session.user.email,
-    userImage: session.user.image,
+  await setDoc(doc(db, "users", session?.user?.email), {
+    userName: session?.user?.name,
+    userEmail: session?.user?.email,
+    userImage: session?.user?.image,
   });
   
 
@@ -76,7 +76,7 @@ const onCreateClick=()=>{
 
 
 { session?. user? (<Image 
-onClick={()=>router.push("/" + session.user.email)}
+onClick={()=>router.push("/" + session?.user?.email)}
 src={session?.user?.image}
 alt='profile' width={60}  height={60} className=' hover:bg-gray-300 rounded-full p-2 cursor-pointer' />):(
 

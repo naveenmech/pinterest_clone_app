@@ -1,3 +1,4 @@
+"use client"
 import Image from 'next/image'
 import { HiOutlineSearch,HiOutlineBell,HiChatAlt2 } from "react-icons/hi";
 import { useSession, signIn, signOut } from "next-auth/react"

@@ -1,3 +1,4 @@
+"use client"
 import GoogleProvider from "next-auth/providers/google";
 
 import NextAuth from "next-auth/next";

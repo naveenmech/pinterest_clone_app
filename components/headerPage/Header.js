@@ -53,7 +53,7 @@ const onCreateClick=()=>{
       <Image src="/pinterest-logo.png"  alt='logo' width={60}  height={60}
       onClick={()=>router.push("/")}
       className=' p-2 hover:bg-gray-300 rounded-full cursor-pointer'  />
-      <button className='bg-black text-white rounded-full px-4   p-2'>Home</button>
+      <button className='bg-black text-white rounded-full px-4   p-2' onClick={()=>router.push("/")}>Home</button>
       <button className='rounded-full  px-4   p-2 font-semibold border-gray-200 border-2' 
       onClick={()=>onCreateClick()}
       >Create</button>
